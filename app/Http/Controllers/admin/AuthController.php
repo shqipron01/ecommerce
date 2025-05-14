@@ -12,7 +12,7 @@ class AuthController extends Controller
 {
     public function authenticate(Request $request) {
 
-        $validator = Validator ::make($request->all(), [
+        $validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required'
         ]);
@@ -24,8 +24,8 @@ class AuthController extends Controller
             ], 400);
         }
 
-        if(Auth ::attempt(['email' => $request->email, 'password' => $request->password])) {
-            $user = User ::find(Auth::user()->id);
+        if(Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+            $user = User::find(Auth::user()->id);
 
             if($user->role == 'admin') {
                
