@@ -70,13 +70,32 @@ class ProductController extends Controller
     }
 
     public function getBrands(){
-        $brand = Brand::orderBy('name', 'ASC')
+        $brands = Brand::orderBy('name', 'ASC')
         ->where('status',1) 
         ->get();
 
         return response()->json([
             'status' => 200,
-            'data' => $brand
+            'data' => $brands
+        ],200);
+    }
+
+    public function getProduct($id){
+        
+        $product = Product::with('product_images', 'product_sizes.size')->find($id);
+
+        if ($product == null ){ 
+           return response()->json([
+            'status' => 404,
+            'message' => 'Product not found'
+        ],404); 
+        }
+
+        
+
+        return response()->json([
+            'status' => 200,
+            'data' => $product
         ],200);
     }
 }
