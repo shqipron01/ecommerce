@@ -101,4 +101,65 @@ class AccountController extends Controller
             'data' => $orders
         ]);
     }
+
+    public function updateProfile(Request $request) {
+
+        $user = User::find($request->user()->id);
+
+        if($user == null) {
+            return response()->json([
+                'status' => 404,
+                'message' => 'User not found'
+            ], 404);
+        }
+
+    $validator = Validator::make($request->all(), [
+        'name' => 'required',
+        'email' => 'required|email|unique:users,email,' . $request->user()->id,
+        'city' => 'required|max:100',
+        'state' => 'required|max:100',
+        'mobile' => 'required|max:15',
+        'zip' => 'required|max:10',
+        'address' => 'required|max:200',
+    ]);
+
+       if ($validator->fails()) {
+            return response()->json([
+                'status' => 400,
+                'errors' => $validator->errors()
+            ], 400);
+        }
+       
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->city = $request->city;
+        $user->state = $request->state;
+        $user->mobile = $request->mobile;
+        $user->zip = $request->zip;
+        $user->address = $request->address;
+        $user->save();
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Profile updated successfully',
+            'data' => $user
+        ], 200);
+        
+    }
+
+    public function getAccountDetails(Request $request) {
+        $user = User::find($request->user()->id);
+
+        if($user == null) {
+            return response()->json([
+                'status' => 404,
+                'message' => 'User not found'
+            ], 404);
+        }
+
+        return response()->json([
+            'status' => 200,
+            'data' => $user
+        ], 200);
+    }
 }
