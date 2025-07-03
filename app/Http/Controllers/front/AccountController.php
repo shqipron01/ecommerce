@@ -64,6 +64,7 @@ class AccountController extends Controller
                 'token' => $token,
                 'id' => $user->id,
                 'name' => $user->name,
+                'role' => $user->role,
             ], 200);
             
         } else {
@@ -109,19 +110,20 @@ class AccountController extends Controller
         if($user == null) {
             return response()->json([
                 'status' => 404,
-                'message' => 'User not found'
+                'message' => 'User not found',
+                'data' => []
             ], 404);
         }
 
-    $validator = Validator::make($request->all(), [
-        'name' => 'required',
-        'email' => 'required|email|unique:users,email,' . $request->user()->id,
-        'city' => 'required|max:100',
-        'state' => 'required|max:100',
-        'mobile' => 'required|max:15',
-        'zip' => 'required|max:10',
-        'address' => 'required|max:200',
-    ]);
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email,' . $request->user()->id. ',id',
+            'city' => 'required|max:100',
+            'state' => 'required|max:100',
+            'mobile' => 'required|max:15',
+            'zip' => 'required|max:10',
+            'address' => 'required|max:200',
+        ]);
 
        if ($validator->fails()) {
             return response()->json([
@@ -134,8 +136,8 @@ class AccountController extends Controller
         $user->email = $request->email;
         $user->city = $request->city;
         $user->state = $request->state;
-        $user->mobile = $request->mobile;
         $user->zip = $request->zip;
+        $user->mobile = $request->mobile;
         $user->address = $request->address;
         $user->save();
 
@@ -155,11 +157,11 @@ class AccountController extends Controller
                 'status' => 404,
                 'message' => 'User not found'
             ], 404);
+        }else{
+            return response()->json([
+                'status' => 200,
+                'data' => $user
+            ], 200);
         }
-
-        return response()->json([
-            'status' => 200,
-            'data' => $user
-        ], 200);
     }
 }

@@ -18,6 +18,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'checkAdminRole' => CheckAdmin::class,
             'checkUserRole' => CheckUser::class
         ]);
+        $middleware->append(\Illuminate\Http\Middleware\HandleCors::class);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

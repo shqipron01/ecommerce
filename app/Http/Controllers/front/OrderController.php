@@ -47,7 +47,8 @@ class OrderController extends Controller
             return response()->json([
                 'status' => 200,
                 'id' => $order->id,
-                'message' => "You have successfully placed your order."
+                'message' => "You have successfully placed your order.",
+                'order'   => $order
             ], 200);
 
         }else{

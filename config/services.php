@@ -17,6 +17,9 @@ return [
     'postmark' => [
         'token' => env('POSTMARK_TOKEN'),
     ],
+    'stripe' => [
+        'secret' => env('STRIPE_SECRET'),
+    ],
 
     'ses' => [
         'key' => env('AWS_ACCESS_KEY_ID'),
@@ -32,6 +35,16 @@ return [
         'notifications' => [
             'bot_user_oauth_token' => env('SLACK_BOT_USER_OAUTH_TOKEN'),
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
+        ],
+    ],
+    
+    'pusher' => [
+        'key' => env('PUSHER_APP_KEY'),
+        'secret' => env('PUSHER_APP_SECRET'),
+        'app_id' => env('PUSHER_APP_ID'),
+        'options' => [
+            'cluster' => env('PUSHER_APP_CLUSTER', 'mt1'),
+            'useTLS' => true,
         ],
     ],
 

@@ -27,6 +27,8 @@ return new class extends Migration
             $table->string('city');
             $table->string('state');
             $table->string('zip');
+            $table->string('stripe_session_id')->nullable();
+            $table->string('payment_method')->nullable()->after('status');
             $table->timestamps();
         });
     }

@@ -16,4 +16,19 @@ class Order extends Model
             'created_at' => 'datetime:d M, Y',
         ];
     }
+    protected $fillable = [
+        'user_id',
+        'stripe_session_id',
+        'subtotal',
+        'payment_method',
+        'grand_total',
+        'shipping',
+        'name',
+        'email',
+        'mobile',
+        'address',
+        'city',
+        'zip',
+        'state',
+    ];
 }
